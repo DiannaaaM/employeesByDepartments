@@ -28,7 +28,7 @@ public class EmployeeServies {
 
     public static List<String> printEmployeeListAll() {
         List<String> ret = Arrays.stream(employees)
-                .map(employee -> employee.toString())
+                .map( Employee::toString )
                 .collect(Collectors.toList());
         return ret;
     }
