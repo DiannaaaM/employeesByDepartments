@@ -1,8 +1,13 @@
 package com.example.employees;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
 import java.util.Objects;
 
-public class Employee {
+@Component
+@SessionScope
+public final class Employee {
     private String name;
     private String familyName;
     private String fullName;
