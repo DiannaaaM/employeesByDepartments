@@ -16,13 +16,6 @@ public class DepartmentServies {
     @Autowired
     private EmployeeServies employeeServies;
 
-//    public List<String> printEmployeeList(byte departmentId) {
-//        return Arrays.stream( employees )
-//                .filter(employee -> employee.getDepartament() == departmentId)
-//                .map(Employee::toString)
-//                .collect(Collectors.toList());
-//    }
-
     public static Map<Byte, List<Employee>> groupEmployeesByDepartment(byte departmentId) {
         return Arrays.stream(employees)
                 .filter(employee -> employee.getDepartament() == departmentId)
