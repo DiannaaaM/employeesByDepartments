@@ -5,6 +5,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
@@ -32,5 +33,8 @@ public class EmployeeServies {
                 .map( Employee::toString )
                 .collect(Collectors.toList());
         return ret;
+    }
+    public static Map<Byte, List<Employee>> groupEmployees () {
+        return (Map<Byte, List<Employee>>) Arrays.stream(employees);
     }
 }

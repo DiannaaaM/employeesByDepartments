@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/departments")
@@ -17,8 +18,8 @@ public class EmployeeController {
         this.employeeServies = employeeServies;
     }
 
-    @GetMapping(path = "/all")
-    public List<String> allEmployees() {
-        return employeeServies.printEmployeeListAll();
+    @GetMapping(path = "/all-grouped")
+    public Map<Byte, List<Employee>> allEmployees() {
+        return employeeServies.groupEmployees();
     }
 }

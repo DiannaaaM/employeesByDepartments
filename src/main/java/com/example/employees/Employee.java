@@ -5,8 +5,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.Objects;
 
-@Component
-@SessionScope
+
 public final class Employee {
     private String name;
     private String familyName;

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/departments")
@@ -30,7 +31,7 @@ public class DepartmentController {
     }
 
     @GetMapping(path = "/all")
-    public List<String> findAllEmployeeOnDepartament(@PathParam("departmentId") byte departmentId) {
-        return departmentServies.printEmployeeList(departmentId);
+    public Map<Byte, List<Employee>> findAllEmployeeOnDepartament(@PathParam("departmentId") byte departmentId) {
+        return departmentServies.groupEmployeesByDepartment(departmentId);
     }
 }
