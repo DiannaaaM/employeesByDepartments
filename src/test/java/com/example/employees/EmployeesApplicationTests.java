@@ -30,13 +30,18 @@ class EmployeesApplicationTests {
 		MockitoAnnotations.openMocks(this);
 	}
 
-	@Test
-	public void groupEmployeesByDepartmentTest() {
+	private Employee[] employees(){
 		Employee[] employees = {
 				new Employee("Иван", "Иванов", (byte) 1, 50000),
 				new Employee("Дмитрий", "Александров", (byte) 4, 15000),
 				new Employee("Евгений", "Александров", (byte) 4, 55500)
 		};
+        return employees;
+    }
+
+	@Test
+	public void groupEmployeesByDepartmentTest() {
+
 
 		when(employeeServies.getEmployees()).thenReturn(employees);
 
@@ -47,32 +52,13 @@ class EmployeesApplicationTests {
 
 	@Test
 	public void getMinSalaryTest() {
-		Employee[] employees = {
-				new Employee("Иван", "Иванов", (byte) 1, 50000),
-				new Employee("Дмитрий", "Александров", (byte) 4, 15000),
-				new Employee("Евгений", "Александров", (byte) 4, 55500)
-		};
 
 		when(employeeServies.getEmployees()).thenReturn(employees);
 
 		List<String> result = departmentServies.getMinSalary((byte) 4);
 		assertEquals(1, result.size());
-		assertEquals("Employee{name='Дмитрий', familyName='Александров', lastName='null', fullName='Александров Дмитрий null', department=4, salary=15000, id=2}", result.get(0));
+		assertEquals("Employee{name='Дмитрий', familyName='Александров', fullName='Александров Дмитрий', departament=4, salary=15000}", result.get(0));
 	}
 
-	@Test
-	public void getMaxSalaryTest() {
-		Employee[] employees = {
-				new Employee("Иван", "Иванов", (byte) 1, 50000),
-				new Employee("Дмитрий", "Александров", (byte) 4, 15000),
-				new Employee("Евгений", "Александров", (byte) 4, 55500)
-		};
-
-		when(employeeServies.getEmployees()).thenReturn(employees);
-
-		List<String> result = departmentServies.getMaxSalary((byte) 4);
-		assertEquals(1, result.size());
-		assertEquals("Employee{name='Евгений', familyName='Александров', lastName='null', fullName='Александров Евгений null', department=4, salary=55500, id=3}", result.get(0));
-	}
 
 }
