@@ -36,6 +36,7 @@ public class EmployeeServies {
         return ret;
     }
     public static Map<Byte, List<Employee>> groupEmployees () {
-        return (Map<Byte, List<Employee>>) Arrays.stream(employees);
+        return Arrays.stream(employees)
+                .collect(Collectors.groupingBy(Employee::getDepartament));
     }
 }

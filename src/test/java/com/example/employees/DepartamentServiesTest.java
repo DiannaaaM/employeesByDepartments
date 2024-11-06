@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
@@ -12,12 +13,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class EmployeeServiesTest {
+public class DepartamentServiesTest {
+
+    @Mock
+    private EmployeeServies employeeService;
 
     @InjectMocks
-    private EmployeeServies employeeService;
+    private DepartmentServies departmentService;
 
     private Employee[] employees;
 
@@ -34,24 +39,32 @@ public class EmployeeServiesTest {
         employees[7] = new Employee("Ivan", "Ivanov", (byte) 3, 90000);
         employees[8] = new Employee("Ivan", "Ivanov", (byte) 2, 20000);
         employees[9] = new Employee("Ivan", "Ivanov", (byte) 5, 10000);
-        employeeService = new EmployeeServies(employees);
+        when(employeeService.getEmployees()).thenReturn(employees);
     }
 
     @Test
-    public void testGetEmployees() {
-        Employee[] result = employeeService.getEmployees();
-        assertEquals(10, result.length);
+    public void testGetMinSalary() {
+        List<String> result = departmentService.getMinSalary((byte) 1);
+        assertEquals(1, result.size());
+        assertEquals("Employee{name='Екатерина', familyName='Иванова', fullName='Иванова Екатерина', departament=1, salary=41000}", result.get(0));
     }
 
     @Test
-    public void testPrintEmployeeListAll() {
-        List<String> result = EmployeeServies.printEmployeeListAll();
-        assertEquals(10, result.size());
+    public void testGetMaxSalary() {
+        List<String> result = departmentService.getMaxSalary((byte) 1);
+        assertEquals(1, result.size());
+        assertEquals("Employee{name='Ivan', familyName='Ivanov', fullName='Ivanov Ivan', departament=1, salary=70000}", result.get(0));
     }
 
     @Test
-    public void testGroupEmployees() {
-        Map<Byte, List<Employee>> result = EmployeeServies.groupEmployees();
-        assertEquals(5, result.size());
+    public void testGetMinSalaryNonExistentDepartment() {
+        List<String> result = departmentService.getMinSalary((byte) 10);
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    public void testGetMaxSalaryNonExistentDepartment() {
+        List<String> result = departmentService.getMaxSalary((byte) 10);
+        assertEquals(0, result.size());
     }
 }

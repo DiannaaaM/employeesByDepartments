@@ -14,31 +14,43 @@ import static com.example.employees.EmployeeServies.employees;
 public class DepartmentServies {
 
     @Autowired
-    private EmployeeServies employeeServies;
+    private EmployeeServies employeeService;
 
-    public static Map<Byte, List<Employee>> groupEmployeesByDepartment(byte departmentId) {
-        return Arrays.stream(employees)
-                .filter(employee -> employee.getDepartament() == departmentId)
-                .collect(Collectors.groupingBy(Employee::getDepartament));
+    public Map<Byte, List<Employee>> groupEmployeesByDepartment(byte departmentId) {
+        return Arrays.stream( employeeService.getEmployees() )
+                .filter( employee -> employee != null && employee.getDepartament() == departmentId )
+                .collect( Collectors.groupingBy( Employee::getDepartament ) );
     }
 
     public List<String> getMinSalary(byte departmentId) {
-        OptionalInt minSalary = Arrays.stream( employees )
-                .filter(employee -> employee.getDepartament() == departmentId)
-                .mapToInt(Employee::getSalary)
+        OptionalInt minSalary = Arrays.stream( employeeService.getEmployees() )
+                .filter( employee -> employee != null && employee.getDepartament() == departmentId )
+                .mapToInt( Employee::getSalary )
                 .min();
 
-        return Arrays.stream( employees )
-                .filter(employee -> employee.getDepartament() == departmentId && employee.getSalary() == minSalary.getAsInt())
-                .map(Employee::toString)
-                .collect(Collectors.toList());
+        if (minSalary.isPresent()) {
+            return Arrays.stream( employeeService.getEmployees() )
+                    .filter( employee -> employee != null && employee.getDepartament() == departmentId && employee.getSalary() == minSalary.getAsInt() )
+                    .map( Employee::toString )
+                    .collect( Collectors.toList() );
+        } else {
+            return List.of();
+        }
     }
 
     public List<String> getMaxSalary(byte departmentId) {
-        OptionalInt maxSalary = Arrays.stream( employees )
-                .filter(employee -> employee.getDepartament() == departmentId)
-                .mapToInt(Employee::getSalary)
+        OptionalInt maxSalary = Arrays.stream( employeeService.getEmployees() )
+                .filter( employee -> employee != null && employee.getDepartament() == departmentId )
+                .mapToInt( Employee::getSalary )
                 .max();
 
-        return (List<String>) Arrays.stream( employees )
-                .filter(employee -> employee.getDepartament() == departmentId && employee.getSalary() == maxSalary.getAsInt());}}
+        if (maxSalary.isPresent()) {
+            return Arrays.stream( employeeService.getEmployees() )
+                    .filter( employee -> employee != null && employee.getDepartament() == departmentId && employee.getSalary() == maxSalary.getAsInt() )
+                    .map( Employee::toString )
+                    .collect( Collectors.toList() );
+        } else {
+            return List.of();
+        }
+    }
+}
